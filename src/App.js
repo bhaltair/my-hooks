@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useToggle, useMount, useUnmount, useRequest } from "./hooks";
+import React, { useState } from 'react';
+import { useToggle, useMount, useUnmount, useRequest, useInterval} from "./hooks";
 import './App.css';
 
 const MyComponent = () => {
@@ -14,15 +14,21 @@ const MyComponent = () => {
   return <div>Hello World</div>;
 };
 
+const params = {}
+
 function App() {
   const [ state, { toggle } ] = useToggle();
 
-  const { isLoading, isError, result, doFetch } = useRequest('http://jsonplaceholder.typicode.com/posts', {});
+  const { isLoading, isError, data } = useRequest('http://localhost:3001/notes', params);
 
-  useEffect(doFetch, [])
+  let [count, setCount] = useState(0)
+  useInterval(() => {
+    setCount(count + 1)
+  }, 1000)
 
   return (
     <div className="App">
+      <h2>{ count }</h2>
       <p>Current Boolean: {String(state)}</p>
       <p>
         <button onClick={() => toggle()}>Toggle</button>
@@ -39,9 +45,9 @@ function App() {
         <div>Loading ...</div>
       ) : (
         <ul>
-          {result && result.hits.map(item => (
-            <li key={item.objectID}>
-              <a href={item.url}>{item.title}</a>
+          {data?.map(item => (
+            <li key={item.id}>
+              <a href={item.url}>{item.content}</a>
             </li>
           ))}
         </ul>
