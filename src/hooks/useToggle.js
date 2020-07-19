@@ -1,14 +1,21 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
-function useToggle(defaultState = false) {
-  if ( typeof defaultState !== 'boolean') throw new Error('defaultState must be boolean')
+function useToggle(defaultState = false, reverseValue = true) {
   const [state, setState] = useState(defaultState);
+  const actions = useMemo(() => {
+    const toggle = (value) => {
+      if (value !== undefined) {
+        setState(value)
+        return
+      }
+      setState(s => (s === defaultState ? reverseValue: defaultState))
+    }
+    return {
+      toggle
+    }
+  }, [defaultState, reverseValue])
 
-  const toggle = () => {
-    setState(!state)
-  }
-
-  return [ state, { toggle } ];
+  return [ state, actions ];
 }
 
 export { useToggle }

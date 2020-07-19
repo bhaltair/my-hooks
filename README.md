@@ -3,8 +3,7 @@
 
 # API 
 - 状态
-  - useBoolean
-  - useToggle
+  - [ ✅] useToggle
 - 异步
   - useRequest
     - 使用 fetch
@@ -13,8 +12,9 @@
   - useThrottle
   - useInterval
 - 生命周期
-  - useMount
-  - useUnmount
+  - [ ✅] useMount
+    - 在组件首次渲染时，执行方法。
+  - [ ✅ ] useUnmount
 - Dom
   - useScroll
 
