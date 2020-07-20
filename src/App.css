@@ -1,5 +1,11 @@
 .App {
   text-align: center;
+
+}
+
+.list {
+  overflow-y: scroll;
+  height: 400px;
 }
 
 .App-logo {

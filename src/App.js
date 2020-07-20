@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useToggle, useMount, useUnmount, useRequest, useInterval} from "./hooks";
+import React, { useState, useRef } from 'react';
+import { useToggle, useMount, useUnmount, useRequest, useInterval, useScroll } from "./hooks";
 import './App.css';
 
 const MyComponent = () => {
@@ -26,9 +26,20 @@ function App() {
     setCount(count + 1)
   }, 1000)
 
+  const ref = useRef()
+  const [ x, y ] = useScroll(ref)
+
   return (
-    <div className="App">
+    <div className="App"> 
       <h2>{ count }</h2>
+      <div className="list" ref={ref}>
+        {
+          new Array(100).fill(4).map((item, index) => {
+            return (<h4 key={index}>{item}</h4>)
+          })            
+        }
+      </div>
+      { 'scrollX ' + x },{ 'scrollY ' + y }
       <p>Current Boolean: {String(state)}</p>
       <p>
         <button onClick={() => toggle()}>Toggle</button>
